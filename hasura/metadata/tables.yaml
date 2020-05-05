@@ -1,0 +1,336 @@
+- table:
+    schema: public
+    name: area
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: area
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: collection_center
+  array_relationships:
+  - name: patient_test_details
+    using:
+      foreign_key_constraint_on:
+        column: collection_center
+        table:
+          schema: public
+          name: patient_test_detail
+- table:
+    schema: public
+    name: facility
+  object_relationships:
+  - name: areaByArea
+    using:
+      foreign_key_constraint_on: area
+  - name: facility_agreement_status
+    using:
+      foreign_key_constraint_on: agreement_status
+  - name: facility_covid_type
+    using:
+      foreign_key_constraint_on: covid_facility_type
+  - name: facilityStatusByFacilityStatus
+    using:
+      foreign_key_constraint_on: facility_status
+  - name: hospitalCategoryByHospitalCategory
+    using:
+      foreign_key_constraint_on: hospital_category
+  - name: institutionTypeByInstitutionType
+    using:
+      foreign_key_constraint_on: institution_type
+  - name: jurisdictionByJurisdiction
+    using:
+      foreign_key_constraint_on: jurisdiction
+  - name: regionByRegion
+    using:
+      foreign_key_constraint_on: region
+  array_relationships:
+  - name: facility_inventories
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: facility_inventory
+  - name: facility_medstaffs
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: facility_medstaff
+  - name: hospital_users
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: hospital_users
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: patient_discharge
+  - name: wards
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: ward
+- table:
+    schema: public
+    name: facility_agreement_status
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: agreement_status
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: facility_covid_type
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: covid_facility_type
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: facility_inventory
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+- table:
+    schema: public
+    name: facility_medstaff
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+- table:
+    schema: public
+    name: facility_status
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: facility_status
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: gender
+  array_relationships:
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: gender
+        table:
+          schema: public
+          name: patient
+  - name: wards
+    using:
+      foreign_key_constraint_on:
+        column: gender
+        table:
+          schema: public
+          name: ward
+- table:
+    schema: public
+    name: hospital_category
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: hospital_category
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: hospital_users
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: regionByRegion
+    using:
+      foreign_key_constraint_on: region
+- table:
+    schema: public
+    name: institution_type
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: institution_type
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: jurisdiction
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: jurisdiction
+        table:
+          schema: public
+          name: facility
+- table:
+    schema: public
+    name: lab
+  array_relationships:
+  - name: patient_test_details
+    using:
+      foreign_key_constraint_on:
+        column: lab
+        table:
+          schema: public
+          name: patient_test_detail
+  - name: patientTestDetailsByTestedAt
+    using:
+      foreign_key_constraint_on:
+        column: tested_at
+        table:
+          schema: public
+          name: patient_test_detail
+- table:
+    schema: public
+    name: patient
+  object_relationships:
+  - name: genderByGender
+    using:
+      foreign_key_constraint_on: gender
+- table:
+    schema: public
+    name: patient_clinical_history
+- table:
+    schema: public
+    name: patient_discharge
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: patient_discharge_reason
+    using:
+      foreign_key_constraint_on: reason
+  - name: quarantineTypeByQuarantineType
+    using:
+      foreign_key_constraint_on: quarantine_type
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
+- table:
+    schema: public
+    name: patient_discharge_reason
+  array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: reason
+        table:
+          schema: public
+          name: patient_discharge
+- table:
+    schema: public
+    name: patient_test_detail
+  object_relationships:
+  - name: collectionCenterByCollectionCenter
+    using:
+      foreign_key_constraint_on: collection_center
+  - name: labByLab
+    using:
+      foreign_key_constraint_on: lab
+  - name: labByTestedAt
+    using:
+      foreign_key_constraint_on: tested_at
+  - name: test_result_status
+    using:
+      foreign_key_constraint_on: result
+- table:
+    schema: public
+    name: quarantine_type
+  array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: quarantine_type
+        table:
+          schema: public
+          name: patient_discharge
+- table:
+    schema: public
+    name: region
+  array_relationships:
+  - name: facilities
+    using:
+      foreign_key_constraint_on:
+        column: region
+        table:
+          schema: public
+          name: facility
+  - name: hospital_users
+    using:
+      foreign_key_constraint_on:
+        column: region
+        table:
+          schema: public
+          name: hospital_users
+- table:
+    schema: public
+    name: severity
+  array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: patient_discharge
+  - name: wards
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: ward
+- table:
+    schema: public
+    name: test_result_status
+  array_relationships:
+  - name: patient_test_details
+    using:
+      foreign_key_constraint_on:
+        column: result
+        table:
+          schema: public
+          name: patient_test_detail
+- table:
+    schema: public
+    name: ward
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: genderByGender
+    using:
+      foreign_key_constraint_on: gender
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
