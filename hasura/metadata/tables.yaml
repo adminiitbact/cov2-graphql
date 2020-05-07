@@ -49,20 +49,6 @@
     using:
       foreign_key_constraint_on: region
   array_relationships:
-  - name: facility_inventories
-    using:
-      foreign_key_constraint_on:
-        column: facility
-        table:
-          schema: public
-          name: facility_inventory
-  - name: facility_medstaffs
-    using:
-      foreign_key_constraint_on:
-        column: facility
-        table:
-          schema: public
-          name: facility_medstaff
   - name: hospital_users
     using:
       foreign_key_constraint_on:
@@ -106,20 +92,6 @@
         table:
           schema: public
           name: facility
-- table:
-    schema: public
-    name: facility_inventory
-  object_relationships:
-  - name: facilityByFacility
-    using:
-      foreign_key_constraint_on: facility
-- table:
-    schema: public
-    name: facility_medstaff
-  object_relationships:
-  - name: facilityByFacility
-    using:
-      foreign_key_constraint_on: facility
 - table:
     schema: public
     name: facility_status
@@ -199,14 +171,14 @@
   - name: patient_test_details
     using:
       foreign_key_constraint_on:
-        column: lab
+        column: lab_confirming
         table:
           schema: public
           name: patient_test_detail
   - name: patientTestDetailsByTestedAt
     using:
       foreign_key_constraint_on:
-        column: tested_at
+        column: sent_to
         table:
           schema: public
           name: patient_test_detail
@@ -233,9 +205,6 @@
   - name: quarantineTypeByQuarantineType
     using:
       foreign_key_constraint_on: quarantine_type
-  - name: severityBySeverity
-    using:
-      foreign_key_constraint_on: severity
 - table:
     schema: public
     name: patient_discharge_reason
@@ -256,10 +225,10 @@
       foreign_key_constraint_on: collection_center
   - name: labByLab
     using:
-      foreign_key_constraint_on: lab
+      foreign_key_constraint_on: lab_confirming
   - name: labByTestedAt
     using:
-      foreign_key_constraint_on: tested_at
+      foreign_key_constraint_on: sent_to
   - name: test_result_status
     using:
       foreign_key_constraint_on: result
@@ -296,13 +265,6 @@
     schema: public
     name: severity
   array_relationships:
-  - name: patient_discharges
-    using:
-      foreign_key_constraint_on:
-        column: severity
-        table:
-          schema: public
-          name: patient_discharge
   - name: wards
     using:
       foreign_key_constraint_on:
