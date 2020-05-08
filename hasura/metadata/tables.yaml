@@ -175,7 +175,7 @@
         table:
           schema: public
           name: patient_test_detail
-  - name: patientTestDetailsByTestedAt
+  - name: patientTestDetailsBySentTo
     using:
       foreign_key_constraint_on:
         column: sent_to
@@ -223,10 +223,10 @@
   - name: collectionCenterByCollectionCenter
     using:
       foreign_key_constraint_on: collection_center
-  - name: labByLab
+  - name: lab
     using:
       foreign_key_constraint_on: lab_confirming
-  - name: labByTestedAt
+  - name: labBySentTo
     using:
       foreign_key_constraint_on: sent_to
   - name: test_result_status
