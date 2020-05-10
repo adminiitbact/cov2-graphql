@@ -1,6 +1,7 @@
 - table:
     schema: public
     name: area
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -9,9 +10,17 @@
         table:
           schema: public
           name: facility
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: locality
+        table:
+          schema: public
+          name: patient
 - table:
     schema: public
     name: collection_center
+  is_enum: true
   array_relationships:
   - name: patient_test_details
     using:
@@ -23,6 +32,7 @@
 - table:
     schema: public
     name: covid_facility_type
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -44,9 +54,9 @@
   - name: facility_agreement_status
     using:
       foreign_key_constraint_on: agreement_status
-  - name: facilityStatusByFacilityStatus
+  - name: facilityStatusByStatus
     using:
-      foreign_key_constraint_on: facility_status
+      foreign_key_constraint_on: status
   - name: hospitalCategoryByHospitalCategory
     using:
       foreign_key_constraint_on: hospital_category
@@ -88,32 +98,19 @@
 - table:
     schema: public
     name: facility_status
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
       foreign_key_constraint_on:
-        column: facility_status
+        column: status
         table:
           schema: public
           name: facility
 - table:
     schema: public
     name: gender
-  array_relationships:
-  - name: patients
-    using:
-      foreign_key_constraint_on:
-        column: gender
-        table:
-          schema: public
-          name: patient
-  - name: wards
-    using:
-      foreign_key_constraint_on:
-        column: gender
-        table:
-          schema: public
-          name: ward
+  is_enum: true
 - table:
     schema: public
     name: hospital_category
@@ -169,9 +166,9 @@
     schema: public
     name: patient
   object_relationships:
-  - name: genderByGender
+  - name: area
     using:
-      foreign_key_constraint_on: gender
+      foreign_key_constraint_on: locality
 - table:
     schema: public
     name: patient_clinical_history
@@ -266,9 +263,6 @@
   - name: facilityByFacility
     using:
       foreign_key_constraint_on: facility
-  - name: genderByGender
-    using:
-      foreign_key_constraint_on: gender
   - name: severityBySeverity
     using:
       foreign_key_constraint_on: severity
