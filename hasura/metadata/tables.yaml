@@ -111,9 +111,25 @@
     schema: public
     name: gender
   is_enum: true
+  array_relationships:
+  - name: patients
+    using:
+      foreign_key_constraint_on:
+        column: gender
+        table:
+          schema: public
+          name: patient
+  - name: wards
+    using:
+      foreign_key_constraint_on:
+        column: gender
+        table:
+          schema: public
+          name: ward
 - table:
     schema: public
     name: hospital_category
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -125,6 +141,7 @@
 - table:
     schema: public
     name: institution_type
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -136,6 +153,7 @@
 - table:
     schema: public
     name: jurisdiction
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -147,6 +165,7 @@
 - table:
     schema: public
     name: lab
+  is_enum: true
   array_relationships:
   - name: patient_test_details
     using:
@@ -169,6 +188,9 @@
   - name: area
     using:
       foreign_key_constraint_on: locality
+  - name: genderByGender
+    using:
+      foreign_key_constraint_on: gender
 - table:
     schema: public
     name: patient_clinical_history
@@ -188,6 +210,7 @@
 - table:
     schema: public
     name: patient_discharge_reason
+  is_enum: true
   array_relationships:
   - name: patient_discharges
     using:
@@ -205,16 +228,17 @@
       foreign_key_constraint_on: collection_center
   - name: lab
     using:
-      foreign_key_constraint_on: lab_confirming
-  - name: labBySentTo
-    using:
       foreign_key_constraint_on: sent_to
+  - name: labByLabConfirming
+    using:
+      foreign_key_constraint_on: lab_confirming
   - name: test_result_status
     using:
       foreign_key_constraint_on: result
 - table:
     schema: public
     name: quarantine_type
+  is_enum: true
   array_relationships:
   - name: patient_discharges
     using:
@@ -226,6 +250,7 @@
 - table:
     schema: public
     name: region
+  is_enum: true
   array_relationships:
   - name: facilities
     using:
@@ -237,6 +262,7 @@
 - table:
     schema: public
     name: severity
+  is_enum: true
   array_relationships:
   - name: wards
     using:
@@ -248,6 +274,7 @@
 - table:
     schema: public
     name: test_result_status
+  is_enum: true
   array_relationships:
   - name: patient_test_details
     using:
@@ -263,6 +290,9 @@
   - name: facilityByFacility
     using:
       foreign_key_constraint_on: facility
+  - name: genderByGender
+    using:
+      foreign_key_constraint_on: gender
   - name: severityBySeverity
     using:
       foreign_key_constraint_on: severity
