@@ -1,0 +1,1 @@
+CREATE TABLE "public"."facility_mapping_though_table"("id" serial NOT NULL, "source" integer NOT NULL, "mapped" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("source") REFERENCES "public"."facility"("id") ON UPDATE cascade ON DELETE cascade, FOREIGN KEY ("mapped") REFERENCES "public"."facility"("id") ON UPDATE cascade ON DELETE cascade);

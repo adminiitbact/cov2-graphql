@@ -1,7 +1,21 @@
 - table:
     schema: public
+    name: admin_users
+  object_relationships:
+  - name: jurisdictionByJurisdiction
+    using:
+      foreign_key_constraint_on: jurisdiction
+  - name: regionByRegion
+    using:
+      foreign_key_constraint_on: region
+- table:
+    schema: public
     name: area
   is_enum: true
+  object_relationships:
+  - name: regionByRegion
+    using:
+      foreign_key_constraint_on: region
   array_relationships:
   - name: facilities
     using:
@@ -70,6 +84,27 @@
     using:
       foreign_key_constraint_on: region
   array_relationships:
+  - name: facility_mapping_though_tables
+    using:
+      foreign_key_constraint_on:
+        column: source
+        table:
+          schema: public
+          name: facility_mapping_though_table
+  - name: facilityMappingThoughTablesByMapped
+    using:
+      foreign_key_constraint_on:
+        column: mapped
+        table:
+          schema: public
+          name: facility_mapping_though_table
+  - name: hospital_users
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: hospital_users
   - name: patient_discharges
     using:
       foreign_key_constraint_on:
@@ -77,6 +112,20 @@
         table:
           schema: public
           name: patient_discharge
+  - name: patient_histories
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: patient_history
+  - name: patient_live_statuses
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: patient_live_status
   - name: wards
     using:
       foreign_key_constraint_on:
@@ -84,6 +133,13 @@
         table:
           schema: public
           name: ward
+  - name: wards_histories
+    using:
+      foreign_key_constraint_on:
+        column: facility
+        table:
+          schema: public
+          name: wards_history
 - table:
     schema: public
     name: facility_agreement_status
@@ -95,6 +151,16 @@
         table:
           schema: public
           name: facility
+- table:
+    schema: public
+    name: facility_mapping_though_table
+  object_relationships:
+  - name: facility
+    using:
+      foreign_key_constraint_on: source
+  - name: facilityByMapped
+    using:
+      foreign_key_constraint_on: mapped
 - table:
     schema: public
     name: facility_status
@@ -126,6 +192,13 @@
         table:
           schema: public
           name: ward
+  - name: wards_histories
+    using:
+      foreign_key_constraint_on:
+        column: gender
+        table:
+          schema: public
+          name: wards_history
 - table:
     schema: public
     name: hospital_category
@@ -138,6 +211,16 @@
         table:
           schema: public
           name: facility
+- table:
+    schema: public
+    name: hospital_users
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: regionByRegion
+    using:
+      foreign_key_constraint_on: region
 - table:
     schema: public
     name: institution_type
@@ -155,6 +238,13 @@
     name: jurisdiction
   is_enum: true
   array_relationships:
+  - name: admin_users
+    using:
+      foreign_key_constraint_on:
+        column: jurisdiction
+        table:
+          schema: public
+          name: admin_users
   - name: facilities
     using:
       foreign_key_constraint_on:
@@ -191,6 +281,35 @@
   - name: genderByGender
     using:
       foreign_key_constraint_on: gender
+  array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_discharge
+  - name: patient_histories
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_history
+  - name: patient_live_statuses
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_live_status
+  - name: patient_test_details
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_test_detail
 - table:
     schema: public
     name: patient_clinical_history
@@ -201,12 +320,24 @@
   - name: facilityByFacility
     using:
       foreign_key_constraint_on: facility
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
   - name: patient_discharge_reason
     using:
       foreign_key_constraint_on: reason
   - name: quarantineTypeByQuarantineType
     using:
       foreign_key_constraint_on: quarantine_type
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
+  - name: test_result_status
+    using:
+      foreign_key_constraint_on: test_status
+  - name: wardByWard
+    using:
+      foreign_key_constraint_on: ward
 - table:
     schema: public
     name: patient_discharge_reason
@@ -221,6 +352,44 @@
           name: patient_discharge
 - table:
     schema: public
+    name: patient_history
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
+  - name: test_result_status
+    using:
+      foreign_key_constraint_on: test_status
+  - name: wardByWard
+    using:
+      foreign_key_constraint_on: ward
+- table:
+    schema: public
+    name: patient_live_status
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
+  - name: test_result_status
+    using:
+      foreign_key_constraint_on: test_status
+  - name: wardByWard
+    using:
+      foreign_key_constraint_on: ward
+- table:
+    schema: public
     name: patient_test_detail
   object_relationships:
   - name: collectionCenterByCollectionCenter
@@ -232,6 +401,9 @@
   - name: labByLabConfirming
     using:
       foreign_key_constraint_on: lab_confirming
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
   - name: test_result_status
     using:
       foreign_key_constraint_on: result
@@ -252,6 +424,20 @@
     name: region
   is_enum: true
   array_relationships:
+  - name: admin_users
+    using:
+      foreign_key_constraint_on:
+        column: region
+        table:
+          schema: public
+          name: admin_users
+  - name: areas
+    using:
+      foreign_key_constraint_on:
+        column: region
+        table:
+          schema: public
+          name: area
   - name: facilities
     using:
       foreign_key_constraint_on:
@@ -259,11 +445,39 @@
         table:
           schema: public
           name: facility
+  - name: hospital_users
+    using:
+      foreign_key_constraint_on:
+        column: region
+        table:
+          schema: public
+          name: hospital_users
 - table:
     schema: public
     name: severity
   is_enum: true
   array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: patient_discharge
+  - name: patient_histories
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: patient_history
+  - name: patient_live_statuses
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: patient_live_status
   - name: wards
     using:
       foreign_key_constraint_on:
@@ -271,11 +485,39 @@
         table:
           schema: public
           name: ward
+  - name: wards_histories
+    using:
+      foreign_key_constraint_on:
+        column: severity
+        table:
+          schema: public
+          name: wards_history
 - table:
     schema: public
     name: test_result_status
   is_enum: true
   array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: test_status
+        table:
+          schema: public
+          name: patient_discharge
+  - name: patient_histories
+    using:
+      foreign_key_constraint_on:
+        column: test_status
+        table:
+          schema: public
+          name: patient_history
+  - name: patient_live_statuses
+    using:
+      foreign_key_constraint_on:
+        column: test_status
+        table:
+          schema: public
+          name: patient_live_status
   - name: patient_test_details
     using:
       foreign_key_constraint_on:
@@ -296,3 +538,48 @@
   - name: severityBySeverity
     using:
       foreign_key_constraint_on: severity
+  array_relationships:
+  - name: patient_discharges
+    using:
+      foreign_key_constraint_on:
+        column: ward
+        table:
+          schema: public
+          name: patient_discharge
+  - name: patient_histories
+    using:
+      foreign_key_constraint_on:
+        column: ward
+        table:
+          schema: public
+          name: patient_history
+  - name: patient_live_statuses
+    using:
+      foreign_key_constraint_on:
+        column: ward
+        table:
+          schema: public
+          name: patient_live_status
+  - name: wards_histories
+    using:
+      foreign_key_constraint_on:
+        column: ward
+        table:
+          schema: public
+          name: wards_history
+- table:
+    schema: public
+    name: wards_history
+  object_relationships:
+  - name: facilityByFacility
+    using:
+      foreign_key_constraint_on: facility
+  - name: genderByGender
+    using:
+      foreign_key_constraint_on: gender
+  - name: severityBySeverity
+    using:
+      foreign_key_constraint_on: severity
+  - name: wardByWard
+    using:
+      foreign_key_constraint_on: ward
