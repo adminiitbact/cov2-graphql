@@ -6,7 +6,7 @@ services:
     ports:
     - "5431:5432"
     volumes:
-    - db_data:/var/lib/postgresql/data
+    - iitbact_db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   graphql-engine:
@@ -23,5 +23,5 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: ${HASURA_GRAPHQL_ADMIN_SECRET}
 
 volumes:
-  db_data:
+  iitbact_db_data:
 
