@@ -273,6 +273,13 @@
     using:
       foreign_key_constraint_on: gender
   array_relationships:
+  - name: patient_clinical_histories
+    using:
+      foreign_key_constraint_on:
+        column: patient
+        table:
+          schema: public
+          name: patient_clinical_history
   - name: patient_discharges
     using:
       foreign_key_constraint_on:
@@ -304,6 +311,10 @@
 - table:
     schema: public
     name: patient_clinical_history
+  object_relationships:
+  - name: patientByPatient
+    using:
+      foreign_key_constraint_on: patient
 - table:
     schema: public
     name: patient_discharge
