@@ -65,9 +65,9 @@
   - name: facility_agreement_status
     using:
       foreign_key_constraint_on: agreement_status
-  - name: facilityStatusByStatus
+  - name: facilityStatusByFacilityStatus
     using:
-      foreign_key_constraint_on: status
+      foreign_key_constraint_on: facility_status
   - name: hospitalCategoryByHospitalCategory
     using:
       foreign_key_constraint_on: hospital_category
@@ -165,7 +165,7 @@
   - name: facilities
     using:
       foreign_key_constraint_on:
-        column: status
+        column: facility_status
         table:
           schema: public
           name: facility
