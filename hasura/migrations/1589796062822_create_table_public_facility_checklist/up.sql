@@ -1,0 +1,1 @@
+CREATE TABLE "public"."facility_checklist"("id" serial NOT NULL, "facility_id" integer NOT NULL, "data" jsonb NOT NULL DEFAULT jsonb_build_object(), "created_at" timestamptz NOT NULL DEFAULT now(), PRIMARY KEY ("id") , FOREIGN KEY ("facility_id") REFERENCES "public"."facility"("id") ON UPDATE cascade ON DELETE cascade);
