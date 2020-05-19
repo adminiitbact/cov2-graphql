@@ -165,6 +165,70 @@
         table:
           schema: public
           name: wards_history
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - address
+      - email
+      - government_hospital
+      - has_links
+      - is_fever_clinic_available
+      - is_separate_entry_exit_available
+      - name
+      - telephone
+      - ulb_ward_name
+      - ulb_zone_name
+      - assets
+      - checklist
+      - contacts
+      - staff
+      - inventory
+      - area
+      - covid_facility_type
+      - agreement_status
+      - hospital_category
+      - institution_type
+      - jurisdiction
+      - region
+      - facility_status
+      filter:
+        id:
+          _eq: X-Hasura-facility-id
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - address
+      - agreement_status
+      - area
+      - assets
+      - checklist
+      - contacts
+      - covid_facility_type
+      - facility_status
+      - government_hospital
+      - has_links
+      - hospital_category
+      - institution_type
+      - inventory
+      - is_fever_clinic_available
+      - is_separate_entry_exit_available
+      - jurisdiction
+      - name
+      - region
+      - staff
+      - telephone
+      - ulb_ward_name
+      - ulb_zone_name
+      filter:
+        id:
+          _eq: X-Hasura-facility-id
+      check: null
 - table:
     schema: public
     name: facility_agreement_status
@@ -367,6 +431,39 @@
         table:
           schema: public
           name: patient_test_detail
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - address
+      - dob
+      - contact_number
+      - district
+      - district_case_id
+      - emergency_contact
+      - first_name
+      - goi_covid_id
+      - hospital_patient_id
+      - last_name
+      - occupation
+      - state
+      - locality
+      - age
+      - middle_name
+      - gender
+      - covid_uid
+      - month
+      - name
+      - pincode
+      - pre_existing_medical_condition
+      filter:
+        patient_live_statuses:
+          facility_id:
+            _eq: x-hasura-facility-id
+      allow_aggregations: true
 - table:
     schema: public
     name: patient_clinical_history
@@ -448,6 +545,23 @@
   - name: wardByWard
     using:
       foreign_key_constraint_on: ward_id
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - facility_id
+      - patient_hospital_id
+      - patient_id
+      - severity
+      - test_status
+      - ward_id
+      filter:
+        facility_id:
+          _eq: x-hasura-facility-id
+      allow_aggregations: true
 - table:
     schema: public
     name: patient_test_detail
@@ -467,6 +581,29 @@
   - name: test_result_status
     using:
       foreign_key_constraint_on: result
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - collection_date
+      - patient
+      - result_available
+      - sample_collected
+      - sample_type
+      - result_date
+      - collection_center
+      - lab_confirming
+      - sent_to
+      - result
+      filter:
+        patientByPatient:
+          patient_live_statuses:
+            facility_id:
+              _eq: x-hasura-facility-id
+      allow_aggregations: true
 - table:
     schema: public
     name: quarantine_type
@@ -549,6 +686,13 @@
         table:
           schema: public
           name: wards_history
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - key
+      - value
+      filter: {}
 - table:
     schema: public
     name: test_result_status
@@ -581,6 +725,13 @@
         table:
           schema: public
           name: patient_test_detail
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - key
+      - value
+      filter: {}
 - table:
     schema: public
     name: ward
@@ -623,6 +774,82 @@
         table:
           schema: public
           name: wards_history
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        facility_id: x-hasura-facility-id
+      columns:
+      - active
+      - available_beds
+      - building_name
+      - covid_status
+      - covid_ward
+      - extra_fields
+      - floor
+      - gender
+      - name
+      - severity
+      - total_beds
+      - ventilators
+      - ventilators_occupied
+      - ward_name
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - active
+      - ward_name
+      - covid_ward
+      - extra_fields
+      - facility_id
+      - floor
+      - total_beds
+      - ventilators
+      - building_name
+      - available_beds
+      - ventilators_occupied
+      - gender
+      - severity
+      - name
+      - covid_status
+      filter:
+        facility_id:
+          _eq: x-hasura-facility-id
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - active
+      - available_beds
+      - building_name
+      - covid_status
+      - covid_ward
+      - extra_fields
+      - floor
+      - gender
+      - name
+      - severity
+      - total_beds
+      - ventilators
+      - ventilators_occupied
+      - ward_name
+      filter:
+        facility_id:
+          _eq: x-hasura-facility-id
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        facility_id:
+          _eq: x-hasura-facility-id
 - table:
     schema: public
     name: wards_history
