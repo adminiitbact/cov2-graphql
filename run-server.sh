@@ -1,4 +1,6 @@
 docker-compose up -d
+
+sleep 5
 cd hasura
 hasura migrate apply
 hasura metadata apply
