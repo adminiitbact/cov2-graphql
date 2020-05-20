@@ -30,6 +30,16 @@
         table:
           schema: public
           name: patient
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - key
+      - region
+      - value
+      - area_id
+      filter: {}
+      allow_aggregations: true
 - table:
     schema: public
     name: collection_center
@@ -655,6 +665,14 @@
         table:
           schema: public
           name: hospital_users
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - key
+      - value
+      filter: {}
+      allow_aggregations: true
 - table:
     schema: public
     name: severity
