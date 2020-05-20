@@ -1,0 +1,5 @@
+install docker
+install docker-compose
+install hasura cli
+
+run run-server.sh
