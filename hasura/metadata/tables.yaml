@@ -317,6 +317,14 @@
         table:
           schema: public
           name: wards_history
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - key
+      - value
+      filter: {}
+      allow_aggregations: true
 - table:
     schema: public
     name: hospital_category
